@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ToiletRoulette;
 
-[BepInPlugin("DarkSnakeX.ToiletRoulette", "ToiletRoulette", "1.0.0")]
+[BepInPlugin("DarkSnakeX.ToiletRoulette", "ToiletRoulette", "1.1.0")]
 public class ToiletRoulette : BaseUnityPlugin
 {
     internal static ToiletRoulette Instance { get; private set; } = null!;

@@ -28,7 +28,8 @@ static class ToiletFunPatch
                     if (component != null)
                     {
                         ToiletRoulette.Logger.LogInfo($"The head has been detected: {component.name}");
-                        if (Random.value < 0.5f)
+                        int number = Random.Range(0, 2);
+                        if (number == 0)
                         {
                             DelayedRevive(component, __instance.transform.position + Vector3.up * 2);
                         }
@@ -61,7 +62,8 @@ static class ToiletFunPatch
         lastPlayerWhoFlushed = FindNearestPlayer(__instance.transform.position);
         if (lastPlayerWhoFlushed != null)
         {
-            lastPlayerWhoFlushed.ChatMessageSpeak("LET'S GO GAMBLING!",false);
+            //lastPlayerWhoFlushed.ChatMessageSpeak("LET'S GO GAMBLING!",false);
+            lastPlayerWhoFlushed.voiceChat.ttsVoice.TTSSpeakNow("LET'S GO GAMBLING!",false);
             ToiletRoulette.Logger.LogInfo($"Player {lastPlayerWhoFlushed.name} interacted with the toilet.");
         }
         else
@@ -74,7 +76,8 @@ static class ToiletFunPatch
     {
         if (lastPlayerWhoFlushed != null)
         {
-            lastPlayerWhoFlushed.ChatMessageSpeak("AW DANG IT!",false);
+            //lastPlayerWhoFlushed.ChatMessageSpeak("AW DANG IT!",false);
+            lastPlayerWhoFlushed.voiceChat.ttsVoice.TTSSpeakNow("AW DANG IT!",false);
             lastPlayerWhoFlushed.PlayerDeath(-1);
             ToiletRoulette.Logger.LogInfo($"Player {lastPlayerWhoFlushed.name} killed for failing the revive.");
         }
@@ -91,10 +94,14 @@ static class ToiletFunPatch
         if (head.playerAvatar != null && (bool)AccessTools.Field(typeof(PlayerAvatar), "deadSet").GetValue(head.playerAvatar))
         {
             head.playerAvatar.Revive(false);
+            PlayerAvatar playerAvatar = head.playerAvatar;
+            playerAvatar.playerHealth.Heal(100);
             head.playerAvatar.transform.position = revivePosition;
             if (lastPlayerWhoFlushed != null)
             {
-                lastPlayerWhoFlushed.ChatMessageSpeak("I CANT STOP WINNING!",false);
+                //lastPlayerWhoFlushed.ChatMessageSpeak("I CANT STOP WINNING!",false);
+                lastPlayerWhoFlushed.voiceChat.ttsVoice.TTSSpeakNow("I CANT STOP WINNING!",false);
+                
             }
             ToiletRoulette.Logger.LogInfo($"Player {head.playerAvatar.name} revived.");
         }
